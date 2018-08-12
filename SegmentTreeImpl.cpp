@@ -38,16 +38,16 @@ void init(int Node,int low,int high,int st[],int a[])
 int query(int Node,int low,int high,int st[],int a[],int i,int j)
 {
     assert(i<=j);
-    cout<<"Call Node : "<<Node<<" Low High "<<low<<" "<<high<<endl;
+    //cout<<"Call Node : "<<Node<<" Low High "<<low<<" "<<high<<endl;
     //if(low==high)return st
     if(i>high || j<low){
-            //cout<<"Node : "<<Node<<" i j : "<<i<<" "<<j<<"low high : "<<low<<" "<<high<<" Returning -1"<<endl;
+            cout<<"Node : "<<Node<<" i j : "<<i<<" "<<j<<"low high : "<<low<<" "<<high<<" Returning -1"<<endl;
             return -1;
     }
     if(i<=low && j>=high )
     {
         //cout<<"Low : "<<low<<" High : "<<high<<" Ans : "<<st[Node]<<endl;
-        //cout<<"Node : "<<Node<<" i j : "<<i<<" "<<j<<"low high : "<<low<<" "<<high<<" Ans "<<st[Node]<<endl;
+        cout<<"Node : "<<Node<<" i j : "<<i<<" "<<j<<"low high : "<<low<<" "<<high<<" Ans "<<st[Node]<<endl;
         return st[Node];
     }
     int p1,p2;
@@ -56,16 +56,17 @@ int query(int Node,int low,int high,int st[],int a[],int i,int j)
     p2=query(2*Node+1,mid(low,high)+1,high,st,a,i,j);
 
     //return the position where the overall minimum is
+
     if (p1 == -1)
-        st[Node] = p2;
+        return p2;
     if (p2 == -1)
-        st[Node] = p1;
+        return p1;
     if (a[p1] <= a[p2])
-        st[Node] = p1;
-    else st[Node] = p2;
+        return p1;
+    else return p2;
     //cout<<"Low : "<<low<<" High : "<<high<<" Ans : "<<st[Node]<<endl;
-    cout<<"Node : "<<Node<<" i j : "<<i<<" "<<j<<"low high : "<<low<<" "<<high<<" Ans "<<st[Node]<<endl;
-    return st[Node];
+    //cout<<"Node : "<<Node<<" i j : "<<i<<" "<<j<<"low high : "<<low<<" "<<high<<" Ans "<<st[Node]<<" Old Ans "<<temp<<endl;
+    //return st[Node];
 
 }
 
@@ -81,8 +82,16 @@ int main()
     cin>>n;
     cout<<"Enter "<<n<<" numbers\n";
     assert(n<MAXN);
+
     int *a = new int[n+1];
     for(i=0;i<n;i++)cin>>a[i];
+     cout<<"---------------------------------------------------------------------------\n";
+    for(i=0;i<n;i++)
+        cout<<i<<"\t";
+    cout<<endl;
+    for(i=0;i<n;i++)
+        cout<<a[i]<<"\t";
+    cout<<endl;
     memset(st,0,max_size*sizeof(int));
     init(1,0,n-1,st,a);
     cout<<"-----------------------------------------------------------------------------\n";
